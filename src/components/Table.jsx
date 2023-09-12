@@ -17,7 +17,7 @@ const Table = ({ filteredContacts }) => {
         </thead>
         <tbody className="divide-y divide-gray-300">
           {filteredContacts.map((contact, index) => (
-            <tr key={contact.id} className=" hover:bg-gray-200 px-5">
+            <tr key={contact._id} className=" hover:bg-gray-200 px-5">
               <td className=" py-4 px-4">{contact.name}</td>
               <td className=" py-4 px-4">{contact.phone}</td>
               <td className=" py-4 px-4">{contact.email}</td>
@@ -32,7 +32,7 @@ const Table = ({ filteredContacts }) => {
                   </button>
                   <button
                     className=" text-red-500"
-                    onClick={() => deleteContact(contact.id)}
+                    onClick={() => deleteContact(contact._id)}
                   >
                     Delete
                   </button>

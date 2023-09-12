@@ -20,12 +20,22 @@ const ContactFormModal = ({
   };
 
   //add contact
-  const addContact = () => {
-    const id = crypto.randomUUID();
+  const addContact = async () => {
+    const { name, email, phone, address } = contact;
+    const data = await fetch("http://localhost:3000/contacts", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...contact }),
+    });
+
+    console.log("data2", data);
+    /*const id = crypto.randomUUID();
     const contactsCopy = [...contacts];
     contactsCopy.unshift({ ...contact, id }); //similar to push
 
-    setContacts(contactsCopy);
+    setContacts(contactsCopy);*/
   };
 
   //submit form

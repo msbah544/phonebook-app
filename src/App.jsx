@@ -9,7 +9,7 @@ const App = () => {
       <div className="flex min-h-screen w-full bg-gray-50">
         <Aside />
         <main className=" flex-1">
-          <div className=" flex justify-end gap-x-4 items-center h-16 bg-white px-8 drop-shadow-sm">
+          <div className=" flex justify-end gap-x-4 items-center h-16 bg-white px-8 drop-shadow-sm ">
             <div className="">
               <h1>Momodou</h1>
             </div>

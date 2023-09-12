@@ -15,7 +15,7 @@ const ContactsContextProvider = ({ children }) => {
   const [contact, setContact] = useState(DEFAULT_CONTACT_STATE);
 
   const [contacts, setContacts] = useState([
-    {
+    /*{
       name: "Momodou",
       phone: "3981289",
       email: "msbah@gmail.com",
@@ -28,9 +28,22 @@ const ContactsContextProvider = ({ children }) => {
       email: "musa@gmail.com",
       address: "Manjie",
       id: "23hdf333",
-    },
+    },*/
   ]);
 
+  //get all contacts from backend
+  //useEffect(() => {
+  const getContacts = async () => {
+    const response = await fetch("http://localhost:3000/api/contacts");
+    if (!response.ok) return console.log("failed to fetch data");
+
+    const data = await response.json();
+    console.log("data", data);
+    setContacts(data);
+  };
+  //getContacts();
+  // }, []);
+  //local storage
   /* useEffect(() => {
     if (localStorage.getItem("contacts")) {
       const locContacts = JSON.parse(localStorage.getItem("contacts"));
@@ -69,7 +82,7 @@ const ContactsContextProvider = ({ children }) => {
     localStorage.setItem("contacts", JSON.stringify(contactsCopy));
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const lsExists = localStorage.getItem("contacts");
     if (lsExists) {
       //console.log("contacts exists #local_storage");
@@ -82,12 +95,13 @@ const ContactsContextProvider = ({ children }) => {
       localStorage.setItem("contacts", JSON.stringify(contacts));
       console.log(JSON.stringify(localStorage.getItem("contacts")));
     }
-  }, []);
+  }, []);*/
 
   return (
     <contactsContext.Provider
       value={{
         DEFAULT_CONTACT_STATE,
+        getContacts,
         contacts,
         setContacts,
         editContact,

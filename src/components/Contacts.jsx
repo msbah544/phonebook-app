@@ -17,6 +17,7 @@ const Contacts = () => {
   const [searchInput, setSearchInput] = useState("");
   const {
     DEFAULT_CONTACT_STATE,
+    getContacts,
     contacts,
     setContacts,
     contact,
@@ -25,6 +26,11 @@ const Contacts = () => {
     toggleModal,
     setToggleModal,
   } = useContext(contactsContext);
+  const [filteredContacts, setFilteredContacts] = useState([]);
+
+  useEffect(() => {
+    getContacts();
+  }, []);
   //const [filteredContacts, setFilteredContacts] = useState([]);
 
   /*const [contacts, setContacts] = useState([
@@ -72,15 +78,23 @@ const Contacts = () => {
   };*/
 
   //update edited contact
-  const updateContact = (id) => {
-    const indexOfEditedContact = contacts.findIndex(
-      (contact) => contact.id == id
-    );
+  const updateContact = async (id) => {
+    const response = await fetch("http://localhost:3000/api/contacts", {
+      method: "PATCH",
+      body: JSON.stringify({ ...contact, _id: id }),
+      headers: { "Content-Type": "application/json" },
+    });
 
-    const nextContacts = [...contacts];
-    nextContacts[indexOfEditedContact] = contact;
-    setContacts(nextContacts);
-    localStorage.setItem("contacts", JSON.stringify(nextContacts));
+    if (response.ok) {
+      const updatedContact = await response.json();
+
+      const index = contacts.findIndex((contactItem) => contactItem._id === id);
+
+      contacts[index] = updatedContact;
+
+      return console.log(index);
+    }
+    return console.log("faliure");
   };
 
   //delete contact
@@ -95,7 +109,7 @@ const Contacts = () => {
   //submit form
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (contact.id) {
+    if (contact._id) {
       //update edited contact
       updateContact(contact.id);
       setToggleModal(false);
@@ -108,10 +122,14 @@ const Contacts = () => {
 
   const handleSearchInput = (e) => setSearchInput(e.target.value);
 
-  const filteredContacts = contacts.filter((contact) => {
-    const contactItem = JSON.stringify(contact);
-    return contactItem.toLowerCase().includes(searchInput.toLowerCase());
-  });
+  useEffect(() => {
+    const filtered = contacts.filter((contact) => {
+      const contactItem = JSON.stringify(contact);
+      return contactItem.toLowerCase().includes(searchInput.toLowerCase());
+    });
+
+    setFilteredContacts(filtered);
+  }, [contacts]);
 
   return (
     <div>
