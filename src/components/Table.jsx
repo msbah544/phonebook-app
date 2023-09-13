@@ -1,8 +1,36 @@
-import React, { useContext } from "react";
-import { contactsContext } from "../../ContactsContextProvider";
+import React, { useEffect, useState } from "react";
 
-const Table = ({ filteredContacts }) => {
-  const { contacts, editContact, deleteContact } = useContext(contactsContext);
+const Table = ({ contacts, setContacts, setToggleModal, setContact }) => {
+  const filteredContacts = [];
+
+  const editContact = async (contact) => {
+    setContact({ ...contact });
+    setToggleModal((prev) => !prev);
+  };
+
+  const deleteContact = async (contactID) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/contacts/${contactID}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        const deletedContact = await response.json();
+        const nextContacts = [...contacts];
+        const filter = nextContacts.filter(
+          (contact) => contact._id !== contactID
+        );
+        setContacts(filter);
+        //console.log(filter);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className=" bg-white mx-8 mt-10 rounded-xl shadow-lg">
       <table className="w-full">
@@ -16,7 +44,7 @@ const Table = ({ filteredContacts }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-300">
-          {filteredContacts.map((contact, index) => (
+          {contacts.map((contact, index) => (
             <tr key={contact._id} className=" hover:bg-gray-200 px-5">
               <td className=" py-4 px-4">{contact.name}</td>
               <td className=" py-4 px-4">{contact.phone}</td>
@@ -31,8 +59,8 @@ const Table = ({ filteredContacts }) => {
                     Edit
                   </button>
                   <button
-                    className=" text-red-500"
                     onClick={() => deleteContact(contact._id)}
+                    className=" text-red-500"
                   >
                     Delete
                   </button>
