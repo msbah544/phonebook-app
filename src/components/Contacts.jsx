@@ -105,8 +105,8 @@ const Contacts = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center pt-10 px-8">
-        <div className=" uppercase">all contacts</div>
+      <div className="flex gap-5 sm:justify-between items-center pt-10 px-8">
+        <div className="hidden sm:flex uppercase">all contacts</div>
         <input
           value={searchInput}
           onChange={handleSearchInput}
@@ -119,18 +119,18 @@ const Contacts = () => {
             setToggleModal((prevState) => !prevState),
               setContact(DEFAULT_FORM_STATE);
           }}
-          className=" text-white py-3 px-5 bg-blue-800 rounded-md uppercase"
+          className=" text-white py-1 px-2 sm:py-3 sm:px-5 bg-blue-800 rounded-md sm:uppercase"
         >
-          new contact
+          New Contact
         </button>
       </div>
-      <div>
+      <div className="">
         <Modal
           className=" flex justify-center items-center"
           open={toggleModal}
           onClose={() => setToggleModal((prevState) => !prevState)}
         >
-          <div className=" w-2/5">
+          <div className=" sm:w-2/5 w-full">
             <div className=" bg-white flex-1 p-5">
               <div className=" flex justify-between items-start text-lg uppercase font-semibold border-b py-3">
                 <h1>New Contact</h1>

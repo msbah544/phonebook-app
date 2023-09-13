@@ -36,7 +36,7 @@ const Table = ({
   };
 
   return (
-    <div className=" bg-white mx-8 mt-10 rounded-xl shadow-lg">
+    <div className=" bg-white sm:mx-8 mt-10 rounded-xl shadow-lg">
       <table className="w-full">
         <thead className="uppercase text-gray-800">
           <tr className=" bg-gray-100">
