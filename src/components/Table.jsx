@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const Table = ({ contacts, setContacts, setToggleModal, setContact }) => {
-  const filteredContacts = [];
-
+const Table = ({
+  contacts,
+  filteredContacts,
+  setContacts,
+  setToggleModal,
+  setContact,
+}) => {
   const editContact = async (contact) => {
     setContact({ ...contact });
     setToggleModal((prev) => !prev);
@@ -44,7 +48,7 @@ const Table = ({ contacts, setContacts, setToggleModal, setContact }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-300">
-          {contacts.map((contact, index) => (
+          {filteredContacts.map((contact, index) => (
             <tr key={contact._id} className=" hover:bg-gray-200 px-5">
               <td className=" py-4 px-4">{contact.name}</td>
               <td className=" py-4 px-4">{contact.phone}</td>

@@ -96,20 +96,20 @@ const Contacts = () => {
     return addNewContact();
   };
 
-  /*const handleSearchInput = (e) => setSearchInput(e.target.value);
+  const handleSearchInput = (e) => setSearchInput(e.target.value);
 
   const filteredContacts = contacts.filter((contact) => {
     const contactItem = JSON.stringify(contact);
     return contactItem.toLowerCase().includes(searchInput.toLowerCase());
-  });*/
+  });
 
   return (
     <div>
       <div className="flex justify-between items-center pt-10 px-8">
         <div className=" uppercase">all contacts</div>
         <input
-          //value={searchInput}
-          //onChange={handleSearchInput}
+          value={searchInput}
+          onChange={handleSearchInput}
           type="text"
           placeholder="search contact..."
           className=" p-3 bg-gray-200"
@@ -218,6 +218,7 @@ const Contacts = () => {
 
       <Table
         contacts={contacts}
+        filteredContacts={filteredContacts}
         setContacts={setContacts}
         setToggleModal={setToggleModal}
         contact={contact}
